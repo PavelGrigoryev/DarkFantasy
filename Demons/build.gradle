@@ -1,19 +1,44 @@
 plugins {
     id 'java'
+    id 'com.google.protobuf' version '0.9.4'
+    id 'io.freefair.lombok' version '8.6'
 }
 
-group = 'com.grigoryev'
-version = '1.0-SNAPSHOT'
+java {
+    sourceCompatibility = targetCompatibility = '17'
+}
 
-repositories {
-    mavenCentral()
+ext {
+    grpcVersion = '1.62.2'
+    protocVersion = '3.25.3'
+    tomcatAnnotationVersion = '6.0.53'
+    logbackVersion = '1.5.3'
+    snakeYamlVersion = '2.2'
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    runtimeOnly "io.grpc:grpc-netty-shaded:$grpcVersion"
+
+    compileOnly "org.apache.tomcat:annotations-api:$tomcatAnnotationVersion"
+
+    implementation "io.grpc:grpc-protobuf:$grpcVersion"
+    implementation "io.grpc:grpc-stub:$grpcVersion"
+    implementation "ch.qos.logback:logback-classic:$logbackVersion"
+    implementation "org.yaml:snakeyaml:$snakeYamlVersion"
 }
 
-test {
-    useJUnitPlatform()
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$protocVersion"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
 }
