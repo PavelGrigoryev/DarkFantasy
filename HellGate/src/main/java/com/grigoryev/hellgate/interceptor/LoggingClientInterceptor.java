@@ -1,13 +1,15 @@
-package com.grigoryev.interceptor;
+package com.grigoryev.hellgate.interceptor;
 
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
 import io.grpc.ClientInterceptor;
 import io.grpc.MethodDescriptor;
+import io.quarkus.grpc.GlobalInterceptor;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
+@GlobalInterceptor
 public class LoggingClientInterceptor implements ClientInterceptor {
 
     @Override
