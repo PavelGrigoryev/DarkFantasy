@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package heroes;
+
+option java_package = "com.grigoryev.heroes";
+option java_multiple_files = true;
+
+message Hero {
+  int64 id = 1;
+  string name = 2;
+  HeroType heroType = 3;
+  HeroStatus heroStatus = 4;
+  int32 level = 5;
+  int32 health = 6;
+}
+
+enum HeroType {
+  WARRIOR = 0;
+  HUNTER = 1;
+  MAGE = 2;
+  PRIEST = 3;
+  ROGUE = 4;
+}
+
+enum HeroStatus {
+  EXPLORING = 0;
+  FIGHTING = 1;
+  RESTING = 2;
+}
+
+message IdRequest {
+  int64 id = 1;
+}
+
+message SaveHeroRequest {
+  string name = 2;
+  HeroType heroType = 3;
+  HeroStatus heroStatus = 4;
+  int32 level = 5;
+  int32 health = 6;
+}
+
+message DeleteResponse {
+  string message = 1;
+}
+
+service HeroService {
+  rpc findById(IdRequest) returns (Hero) {};
+  rpc findAll(google.protobuf.Empty) returns (stream Hero) {};
+  rpc findAllByIds(stream IdRequest) returns(stream Hero) {};
+  rpc save(SaveHeroRequest) returns (Hero) {};
+  rpc updateById(Hero) returns (Hero) {};
+  rpc deleteById(IdRequest) returns (DeleteResponse) {};
+}

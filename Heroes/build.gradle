@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'com.google.protobuf' version '0.9.4'
+    id 'io.freefair.lombok' version '8.6'
+    id 'nu.studer.jooq' version '9.0'
+    id 'org.liquibase.gradle' version '2.2.1'
+}
+
+java {
+    sourceCompatibility = targetCompatibility = '17'
+}
+
+apply {
+    from('libraries.gradle')
+    from('protobuf.gradle')
+    from('liquibase.gradle')
+    from('jooq.gradle')
+}
+
+generateJooq.dependsOn(update)
+
+compileJava {
+    options.annotationProcessorPath = configurations.annotationProcessor
+    options.compilerArgs += [
+            '-Amapstruct.unmappedTargetPolicy=IGNORE'
+    ]
+}
