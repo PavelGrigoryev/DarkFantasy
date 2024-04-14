@@ -1,0 +1,11 @@
+quarkus:
+  grpc:
+    server:
+      use-separate-server: false
+    clients:
+      demon-client:
+        host: localhost
+        port: 50052
+        load-balancing-policy: round_robin
+  http:
+    port: 50050

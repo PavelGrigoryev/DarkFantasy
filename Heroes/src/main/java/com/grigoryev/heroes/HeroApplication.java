@@ -1,6 +1,6 @@
 package com.grigoryev.heroes;
 
-import com.grigoryev.heroes.interceptor.LoggingInterceptor;
+import com.grigoryev.heroes.interceptor.LoggingServerInterceptor;
 import com.grigoryev.heroes.service.HeroServiceImpl;
 import com.grigoryev.heroes.util.YamlUtil;
 import io.grpc.Server;
@@ -18,7 +18,7 @@ public class HeroApplication {
 
         Server server = ServerBuilder.forPort(port)
                 .addService(new HeroServiceImpl())
-                .intercept(new LoggingInterceptor())
+                .intercept(new LoggingServerInterceptor())
                 .build()
                 .start();
 

@@ -1,6 +1,6 @@
 package com.grigoryev.demons;
 
-import com.grigoryev.demons.interceptor.LoggingInterceptor;
+import com.grigoryev.demons.interceptor.LoggingServerInterceptor;
 import com.grigoryev.demons.service.DemonServiceImpl;
 import com.grigoryev.demons.util.YamlUtil;
 import io.grpc.Server;
@@ -14,11 +14,12 @@ public class DemonApplication {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         log.info("Hello gRPC!");
-        int port = Integer.parseInt(YamlUtil.getYaml().get("server").get("port"));
+        int port = args.length > 0 ? Integer.parseInt(args[0])
+                : Integer.parseInt(YamlUtil.getYaml().get("server").get("port"));
 
         Server server = ServerBuilder.forPort(port)
                 .addService(new DemonServiceImpl())
-                .intercept(new LoggingInterceptor())
+                .intercept(new LoggingServerInterceptor())
                 .build()
                 .start();
 
