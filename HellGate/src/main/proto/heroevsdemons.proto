@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
 import "heroes.proto";
 import "demons.proto";
 
@@ -21,4 +20,5 @@ message IdsRequest {
 
 service HeroesVsDemonsService {
   rpc findHeroVsDemonById(IdsRequest) returns (HeroVsDemon) {};
+  rpc findAllHeroVsDemonByIds(stream IdsRequest) returns(stream HeroVsDemon) {};
 }
