@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package demons;
+
+option java_package = "com.grigoryev.demons";
+option java_multiple_files = true;
+
+message Demon {
+  int64 id = 1;
+  string name = 2;
+  DemonType type = 3;
+  int32 level = 4;
+  string ability = 5;
+  bool isCaptured = 6;
+}
+
+enum DemonType {
+  FIEND = 0;
+  SPECTER = 1;
+  WRAITH = 2;
+  PHANTOM = 3;
+  DEVIL = 4;
+}
+
+message IdRequest {
+  int64 id = 1;
+}
+
+service DemonService {
+  rpc findById(IdRequest) returns (Demon) {};
+  rpc findAll(google.protobuf.Empty) returns (stream Demon) {};
+  rpc findAllByIds(stream IdRequest) returns(stream Demon) {};
+}

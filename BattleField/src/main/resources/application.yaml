@@ -1,0 +1,8 @@
+grpc:
+  client:
+    demon-client:
+      address: static://localhost:50052,localhost:50053,localhost:50054
+      negotiation-type: plaintext
+      default-load-balancing-policy: round_robin
+  server:
+    port: 50049
