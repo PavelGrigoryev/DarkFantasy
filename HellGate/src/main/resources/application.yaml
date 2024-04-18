@@ -6,10 +6,8 @@ quarkus:
       demon-client:
         host: localhost
         port: 50052
-        load-balancing-policy: round_robin
       hero-client:
         host: localhost
         port: 50051
-        load-balancing-policy: round_robin
   http:
     port: 50050
