@@ -21,13 +21,13 @@ public class DemonServiceImpl extends DemonServiceGrpc.DemonServiceImplBase {
         demonClient.findById(request, new StreamObserver<>() {
 
             @Override
-            public void onNext(Demon value) {
-                responseObserver.onNext(value);
+            public void onNext(Demon demon) {
+                responseObserver.onNext(demon);
             }
 
             @Override
-            public void onError(Throwable t) {
-                responseObserver.onError(t);
+            public void onError(Throwable throwable) {
+                responseObserver.onError(throwable);
             }
 
             @Override
@@ -40,12 +40,46 @@ public class DemonServiceImpl extends DemonServiceGrpc.DemonServiceImplBase {
 
     @Override
     public void findAll(Empty request, StreamObserver<Demon> responseObserver) {
-        super.findAll(request, responseObserver);
+        demonClient.findAll(request, new StreamObserver<>() {
+
+            @Override
+            public void onNext(Demon demon) {
+                responseObserver.onNext(demon);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                responseObserver.onError(throwable);
+            }
+
+            @Override
+            public void onCompleted() {
+                responseObserver.onCompleted();
+            }
+
+        });
     }
 
     @Override
     public StreamObserver<IdRequest> findAllByIds(StreamObserver<Demon> responseObserver) {
-        return super.findAllByIds(responseObserver);
+        return demonClient.findAllByIds(new StreamObserver<>() {
+
+            @Override
+            public void onNext(Demon demon) {
+                responseObserver.onNext(demon);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                responseObserver.onError(throwable);
+            }
+
+            @Override
+            public void onCompleted() {
+                responseObserver.onCompleted();
+            }
+
+        });
     }
 
 }

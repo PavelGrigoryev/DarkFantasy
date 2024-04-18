@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+import "heroes.proto";
+import "demons.proto";
+
+package heroes_vs_demons;
+
+option java_package = "com.grigoryev.heroesvsdemons";
+option java_multiple_files = true;
+
+message HeroVsDemon {
+  heroes.Hero hero = 1;
+  demons.Demon demon = 2;
+}
+
+message IdsRequest {
+  int64 heroId = 1;
+  int64 demonId = 2;
+}
+
+service HeroesVsDemonsService {
+  rpc findHeroVsDemonById(IdsRequest) returns (HeroVsDemon) {};
+  rpc findAllHeroVsDemonByIds(stream IdsRequest) returns(stream HeroVsDemon) {};
+}

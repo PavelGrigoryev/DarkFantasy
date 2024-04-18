@@ -4,5 +4,8 @@ grpc:
       address: static://localhost:50052,localhost:50053,localhost:50054
       negotiation-type: plaintext
       default-load-balancing-policy: round_robin
+    hero-client:
+      address: static://localhost:50051
+      negotiation-type: plaintext
   server:
     port: 50049
