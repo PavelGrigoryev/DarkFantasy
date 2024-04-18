@@ -76,7 +76,65 @@ public class HeroVsDemonServiceImpl extends HeroesVsDemonsServiceGrpc.HeroesVsDe
 
     @Override
     public StreamObserver<IdsRequest> findAllHeroVsDemonByIds(StreamObserver<HeroVsDemon> responseObserver) {
-        return super.findAllHeroVsDemonByIds(responseObserver);
+        return new StreamObserver<>() {
+            @Override
+            public void onNext(IdsRequest idsRequest) {
+                CountDownLatch finishLatch = new CountDownLatch(2);
+                HeroVsDemon.Builder builder = HeroVsDemon.newBuilder();
+
+                heroClient.findById(IdRequest.newBuilder().setId(idsRequest.getHeroId()).build(), new StreamObserver<>() {
+                    @Override
+                    public void onNext(Hero hero) {
+                        builder.setHero(hero);
+                        finishLatch.countDown();
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        responseObserver.onError(t);
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                    }
+                });
+                demonClient.findById(com.grigoryev.demons.IdRequest.newBuilder().setId(idsRequest.getDemonId()).build(), new StreamObserver<>() {
+                    @Override
+                    public void onNext(Demon demon) {
+                        builder.setDemon(demon);
+                        finishLatch.countDown();
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        responseObserver.onError(t);
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                    }
+                });
+
+                try {
+                    finishLatch.await();
+                    responseObserver.onNext(builder.build());
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    responseObserver.onError(e);
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                responseObserver.onError(t);
+            }
+
+            @Override
+            public void onCompleted() {
+                responseObserver.onCompleted();
+            }
+
+        };
     }
 
 }
