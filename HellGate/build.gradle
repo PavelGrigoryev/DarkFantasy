@@ -1,20 +1,42 @@
 plugins {
     id 'java'
-    id 'io.quarkus'
+    id 'org.springframework.boot' version '3.2.4'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'com.google.protobuf' version '0.9.4'
+    id 'io.freefair.lombok' version '8.6'
 }
 
 java {
     sourceCompatibility = targetCompatibility = '17'
 }
 
-dependencies {
-    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation 'io.quarkus:quarkus-grpc'
-    implementation 'io.quarkus:quarkus-arc'
-    implementation 'io.quarkus:quarkus-config-yaml'
+ext {
+    grpcStarterVersion = '3.1.0.RELEASE'
+    tomcatAnnotationVersion = '6.0.53'
+    protocVersion = '3.25.3'
+    grpcVersion = '1.62.2'
 }
 
-compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs << '-parameters'
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation "net.devh:grpc-server-spring-boot-starter:$grpcStarterVersion"
+    implementation "net.devh:grpc-client-spring-boot-starter:$grpcStarterVersion"
+
+    compileOnly "org.apache.tomcat:annotations-api:$tomcatAnnotationVersion"
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$protocVersion"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:$grpcVersion"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
 }
