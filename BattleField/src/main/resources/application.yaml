@@ -5,9 +5,12 @@ quarkus:
     clients:
       demon-client:
         host: localhost
-        port: 50052
+        port: 50049
       hero-client:
         host: localhost
-        port: 50051
+        port: 50049
+      hero-vs-demon-client:
+        host: localhost
+        port: 50049
   http:
     port: 50050
