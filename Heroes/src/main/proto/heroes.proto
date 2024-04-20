@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "id.proto";
 
 package heroes;
 
@@ -28,10 +29,6 @@ enum HeroStatus {
   EXPLORING = 0;
   FIGHTING = 1;
   RESTING = 2;
-}
-
-message IdRequest {
-  int64 id = 1;
 }
 
 message SaveHeroRequest {

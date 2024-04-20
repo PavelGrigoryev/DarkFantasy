@@ -3,7 +3,7 @@ package com.grigoryev.hellgate.service;
 import com.google.protobuf.Empty;
 import com.grigoryev.demons.Demon;
 import com.grigoryev.demons.DemonServiceGrpc;
-import com.grigoryev.demons.IdRequest;
+import com.grigoryev.id.IdRequest;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;

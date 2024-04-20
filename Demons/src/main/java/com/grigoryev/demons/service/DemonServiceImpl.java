@@ -3,8 +3,8 @@ package com.grigoryev.demons.service;
 import com.google.protobuf.Empty;
 import com.grigoryev.demons.Demon;
 import com.grigoryev.demons.DemonServiceGrpc;
-import com.grigoryev.demons.IdRequest;
 import com.grigoryev.demons.util.DemonGenerator;
+import com.grigoryev.id.IdRequest;
 import io.grpc.stub.StreamObserver;
 
 import java.util.Map;

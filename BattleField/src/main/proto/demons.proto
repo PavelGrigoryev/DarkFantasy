@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "id.proto";
 
 package demons;
 
@@ -22,10 +23,6 @@ enum DemonType {
   WRAITH = 2;
   PHANTOM = 3;
   DEVIL = 4;
-}
-
-message IdRequest {
-  int64 id = 1;
 }
 
 service DemonService {
