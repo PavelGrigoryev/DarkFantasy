@@ -18,11 +18,12 @@ message Demon {
 }
 
 enum DemonType {
-  FIEND = 0;
-  SPECTER = 1;
-  WRAITH = 2;
-  PHANTOM = 3;
-  DEVIL = 4;
+  SINISTER = 0;
+  FIEND = 1;
+  SPECTER = 2;
+  WRAITH = 3;
+  PHANTOM = 4;
+  DEVIL = 5;
 }
 
 service DemonService {

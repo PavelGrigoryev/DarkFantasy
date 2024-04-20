@@ -6,22 +6,28 @@ import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 import java.security.SecureRandom;
+import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 @UtilityClass
 public class DemonGenerator {
 
-    private final String[] DEMON_NAMES = {
-            "Astaroth", "Bael", "Caim", "Dantalion", "Eligos", "Furfur", "Gremory", "Halphas", "Ipos", "Jegudiel"
-    };
+    private final Queue<String> DEMON_NAMES = new ArrayDeque<>(Arrays.asList(
+            "Astaroth", "Bael", "Caim", "Dantalion", "Eligos", "Furfur", "Gremory", "Halphas", "Ipos", "Jegudiel",
+            "Kokabiel", "Leraje", "Marbas", "Naberius", "Orias", "Paimon", "Raum", "Seere", "Valefor", "Zagan"
+    ));
     private final DemonType[] DEMON_TYPES = {
             DemonType.FIEND, DemonType.SPECTER, DemonType.WRAITH, DemonType.PHANTOM, DemonType.DEVIL
     };
-    private final String[] ABILITIES = new String[]{
+    private final Queue<String> ABILITIES = new ArrayDeque<>(Arrays.asList(
             "Fire Breath", "Ice Blast", "Shadow Stealth", "Teleportation", "Mind Control",
-            "Soul Drain", "Dark Whisper", "Chaos Bolt", "Nether Swap", "Inferno Fury"
-    };
+            "Soul Drain", "Dark Whisper", "Chaos Bolt", "Nether Swap", "Inferno Fury",
+            "Lightning Strike", "Earthquake", "Wind Fury", "Water Surge", "Nature's Grasp",
+            "Stone Skin", "Solar Flare", "Lunar Blessing", "Starfall", "Void Rift"
+    ));
     private final SecureRandom RANDOM = new SecureRandom();
 
     @Getter
@@ -37,10 +43,10 @@ public class DemonGenerator {
     private Demon generateRandomDemon(Long id) {
         return Demon.newBuilder()
                 .setId(id)
-                .setName(DEMON_NAMES[RANDOM.nextInt(DEMON_NAMES.length)])
+                .setName(DEMON_NAMES.poll())
                 .setType(DEMON_TYPES[RANDOM.nextInt(DEMON_TYPES.length)])
                 .setLevel(RANDOM.nextInt(100) + 1)
-                .setAbility(ABILITIES[RANDOM.nextInt(ABILITIES.length)])
+                .setAbility(ABILITIES.poll())
                 .setIsCaptured(RANDOM.nextBoolean())
                 .build();
     }

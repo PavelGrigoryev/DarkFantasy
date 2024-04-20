@@ -18,17 +18,19 @@ message Hero {
 }
 
 enum HeroType {
-  WARRIOR = 0;
-  HUNTER = 1;
-  MAGE = 2;
-  PRIEST = 3;
-  ROGUE = 4;
+  BEGGAR = 0;
+  WARRIOR = 1;
+  HUNTER = 2;
+  MAGE = 3;
+  PRIEST = 4;
+  ROGUE = 5;
 }
 
 enum HeroStatus {
-  EXPLORING = 0;
-  FIGHTING = 1;
-  RESTING = 2;
+  INACTIVE = 0;
+  EXPLORING = 1;
+  FIGHTING = 2;
+  RESTING = 3;
 }
 
 message SaveHeroRequest {
