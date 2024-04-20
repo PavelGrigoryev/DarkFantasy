@@ -1,4 +1,4 @@
-package com.grigoryev.hellgate.interceptor;
+package com.grigoryev.battlefield.interceptor;
 
 import io.grpc.ClientCall;
 import io.grpc.ForwardingClientCallListener;

@@ -4,9 +4,8 @@ import io.grpc.ClientCall;
 import io.grpc.ForwardingClientCall;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
-import lombok.extern.slf4j.Slf4j;
+import io.quarkus.logging.Log;
 
-@Slf4j
 public class LoggingClientCall<ReqT, RespT> extends ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT> {
 
     private final MethodDescriptor<ReqT, RespT> method;
@@ -18,13 +17,13 @@ public class LoggingClientCall<ReqT, RespT> extends ForwardingClientCall.SimpleF
 
     @Override
     public void start(Listener<RespT> responseListener, Metadata headers) {
-        log.info("Client call started: {}", method.getFullMethodName());
+        Log.infof("Client call started: %s", method.getFullMethodName());
         super.start(new LoggingClientCallListener<>(responseListener), headers);
     }
 
     @Override
     public void sendMessage(ReqT message) {
-        log.info("Client sent request:\n{}", message);
+        Log.infof("Client sent request:\n%s", message);
         super.sendMessage(message);
     }
 

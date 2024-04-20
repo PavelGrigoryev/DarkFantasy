@@ -5,11 +5,9 @@ import io.grpc.Channel;
 import io.grpc.ClientCall;
 import io.grpc.ClientInterceptor;
 import io.grpc.MethodDescriptor;
-import io.quarkus.grpc.GlobalInterceptor;
-import jakarta.enterprise.context.ApplicationScoped;
+import net.devh.boot.grpc.client.interceptor.GrpcGlobalClientInterceptor;
 
-@ApplicationScoped
-@GlobalInterceptor
+@GrpcGlobalClientInterceptor
 public class LoggingClientInterceptor implements ClientInterceptor {
 
     @Override

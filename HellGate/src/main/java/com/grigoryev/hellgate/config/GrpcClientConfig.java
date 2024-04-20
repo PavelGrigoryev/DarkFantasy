@@ -1,4 +1,4 @@
-package com.grigoryev.battlefield.config;
+package com.grigoryev.hellgate.config;
 
 import com.grigoryev.demons.DemonServiceGrpc;
 import com.grigoryev.heroes.HeroServiceGrpc;
@@ -12,7 +12,6 @@ public class GrpcClientConfig {
 
     @GrpcClient("demon-client")
     private Channel demonChannel;
-
     @GrpcClient("hero-client")
     private Channel heroChannel;
 

@@ -9,8 +9,5 @@ quarkus:
       hero-client:
         host: localhost
         port: 50049
-      hero-vs-demon-client:
-        host: localhost
-        port: 50049
   http:
     port: 50050

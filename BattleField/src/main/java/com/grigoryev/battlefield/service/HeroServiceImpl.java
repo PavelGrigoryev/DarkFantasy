@@ -1,4 +1,4 @@
-package com.grigoryev.hellgate.service;
+package com.grigoryev.battlefield.service;
 
 import com.google.protobuf.Empty;
 import com.grigoryev.heroes.DeleteResponse;

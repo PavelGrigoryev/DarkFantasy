@@ -1,4 +1,4 @@
-package com.grigoryev.battlefield;
+package com.grigoryev.hellgate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.grigoryev.battlefield.service;
+package com.grigoryev.hellgate.service;
 
 import com.google.protobuf.Empty;
 import com.grigoryev.demons.Demon;
