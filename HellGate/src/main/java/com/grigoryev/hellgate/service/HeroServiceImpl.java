@@ -1,6 +1,7 @@
 package com.grigoryev.hellgate.service;
 
 import com.google.protobuf.Empty;
+import com.grigoryev.hellgate.service.observer.HeroStreamObserver;
 import com.grigoryev.heroes.DeleteResponse;
 import com.grigoryev.heroes.Hero;
 import com.grigoryev.heroes.HeroServiceGrpc;
@@ -20,112 +21,27 @@ public class HeroServiceImpl extends HeroServiceGrpc.HeroServiceImplBase {
 
     @Override
     public void findById(IdRequest request, StreamObserver<Hero> responseObserver) {
-        heroClient.findById(request, new StreamObserver<>() {
-
-            @Override
-            public void onNext(Hero hero) {
-                responseObserver.onNext(hero);
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                responseObserver.onError(throwable);
-            }
-
-            @Override
-            public void onCompleted() {
-                responseObserver.onCompleted();
-            }
-
-        });
+        heroClient.findById(request, new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public void findAll(Empty request, StreamObserver<Hero> responseObserver) {
-        heroClient.findAll(request, new StreamObserver<>() {
-
-            @Override
-            public void onNext(Hero hero) {
-                responseObserver.onNext(hero);
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                responseObserver.onError(throwable);
-            }
-
-            @Override
-            public void onCompleted() {
-                responseObserver.onCompleted();
-            }
-
-        });
+        heroClient.findAll(request, new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public StreamObserver<IdRequest> findAllByIds(StreamObserver<Hero> responseObserver) {
-        return heroClient.findAllByIds(new StreamObserver<>() {
-
-            @Override
-            public void onNext(Hero hero) {
-                responseObserver.onNext(hero);
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                responseObserver.onError(throwable);
-            }
-
-            @Override
-            public void onCompleted() {
-                responseObserver.onCompleted();
-            }
-
-        });
+        return heroClient.findAllByIds(new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public void save(SaveHeroRequest request, StreamObserver<Hero> responseObserver) {
-        heroClient.save(request, new StreamObserver<>() {
-
-            @Override
-            public void onNext(Hero hero) {
-                responseObserver.onNext(hero);
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                responseObserver.onError(throwable);
-            }
-
-            @Override
-            public void onCompleted() {
-                responseObserver.onCompleted();
-            }
-
-        });
+        heroClient.save(request, new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public void updateById(Hero request, StreamObserver<Hero> responseObserver) {
-        heroClient.updateById(request, new StreamObserver<>() {
-
-            @Override
-            public void onNext(Hero hero) {
-                responseObserver.onNext(hero);
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-                responseObserver.onError(throwable);
-            }
-
-            @Override
-            public void onCompleted() {
-                responseObserver.onCompleted();
-            }
-
-        });
+        heroClient.updateById(request, new HeroStreamObserver(responseObserver));
     }
 
     @Override

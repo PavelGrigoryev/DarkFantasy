@@ -12,7 +12,7 @@ ext {
     grpcVersion = '1.62.2'
     protocVersion = '3.25.3'
     tomcatAnnotationVersion = '6.0.53'
-    logbackVersion = '1.5.3'
+    logbackVersion = '1.5.6'
     snakeYamlVersion = '2.2'
 }
 
