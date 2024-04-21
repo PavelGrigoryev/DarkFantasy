@@ -1,5 +1,6 @@
 package com.grigoryev.battlefield.service;
 
+import com.grigoryev.battlefield.interceptor.credentials.TokenCredentials;
 import com.grigoryev.demons.Demon;
 import com.grigoryev.demons.MutinyDemonServiceGrpc;
 import com.grigoryev.heroes.Hero;
@@ -24,8 +25,10 @@ public class HeroVsDemonServiceImpl implements HeroesVsDemonsService {
 
     @Override
     public Uni<HeroVsDemon> findHeroVsDemonById(IdsRequest request) {
-        Uni<Demon> demonUni = demonClient.findById(IdRequest.newBuilder().setId(request.getDemonId()).build());
-        Uni<Hero> heroUni = heroClient.findById(IdRequest.newBuilder().setId(request.getHeroId()).build());
+        Uni<Demon> demonUni = demonClient.withCallCredentials(TokenCredentials.create())
+                .findById(IdRequest.newBuilder().setId(request.getDemonId()).build());
+        Uni<Hero> heroUni = heroClient.withCallCredentials(TokenCredentials.create())
+                .findById(IdRequest.newBuilder().setId(request.getHeroId()).build());
         return Uni.combine()
                 .all()
                 .unis(demonUni, heroUni)
@@ -37,8 +40,10 @@ public class HeroVsDemonServiceImpl implements HeroesVsDemonsService {
     @Override
     public Multi<HeroVsDemon> findAllHeroVsDemonByIds(Multi<IdsRequest> request) {
         return request.flatMap(idsRequest -> {
-            Uni<Demon> demonUni = demonClient.findById(IdRequest.newBuilder().setId(idsRequest.getDemonId()).build());
-            Uni<Hero> heroUni = heroClient.findById(IdRequest.newBuilder().setId(idsRequest.getHeroId()).build());
+            Uni<Demon> demonUni = demonClient.withCallCredentials(TokenCredentials.create())
+                    .findById(IdRequest.newBuilder().setId(idsRequest.getDemonId()).build());
+            Uni<Hero> heroUni = heroClient.withCallCredentials(TokenCredentials.create())
+                    .findById(IdRequest.newBuilder().setId(idsRequest.getHeroId()).build());
 
             return Uni.combine()
                     .all()

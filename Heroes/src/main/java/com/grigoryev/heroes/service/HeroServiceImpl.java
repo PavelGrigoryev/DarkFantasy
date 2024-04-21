@@ -29,11 +29,10 @@ public class HeroServiceImpl extends HeroServiceGrpc.HeroServiceImplBase {
     public void findById(IdRequest request, StreamObserver<Hero> responseObserver) {
         Hero hero = heroRepository.findById(request.getId())
                 .map(heroMapper::toHero)
-                .orElseThrow(() -> {
-                    StatusRuntimeException runtimeException = getStatusRuntimeException(request.getId());
-                    responseObserver.onError(runtimeException);
-                    return runtimeException;
-                });
+                .orElseGet(() -> Hero.newBuilder()
+                        .setId(request.getId())
+                        .setName("Hero with this id is not exist")
+                        .build());
         responseObserver.onNext(hero);
         responseObserver.onCompleted();
     }

@@ -1,6 +1,7 @@
 package com.grigoryev.battlefield.service;
 
 import com.google.protobuf.Empty;
+import com.grigoryev.battlefield.interceptor.credentials.TokenCredentials;
 import com.grigoryev.heroes.DeleteResponse;
 import com.grigoryev.heroes.Hero;
 import com.grigoryev.heroes.HeroService;
@@ -20,32 +21,38 @@ public class HeroServiceImpl implements HeroService {
 
     @Override
     public Uni<Hero> findById(IdRequest request) {
-        return heroClient.findById(request);
+        return heroClient.withCallCredentials(TokenCredentials.create())
+                .findById(request);
     }
 
     @Override
     public Uni<Hero> save(SaveHeroRequest request) {
-        return heroClient.save(request);
+        return heroClient.withCallCredentials(TokenCredentials.create())
+                .save(request);
     }
 
     @Override
     public Uni<Hero> updateById(Hero request) {
-        return heroClient.updateById(request);
+        return heroClient.withCallCredentials(TokenCredentials.create())
+                .updateById(request);
     }
 
     @Override
     public Uni<DeleteResponse> deleteById(IdRequest request) {
-        return heroClient.deleteById(request);
+        return heroClient.withCallCredentials(TokenCredentials.create())
+                .deleteById(request);
     }
 
     @Override
     public Multi<Hero> findAll(Empty request) {
-        return heroClient.findAll(request);
+        return heroClient.withCallCredentials(TokenCredentials.create())
+                .findAll(request);
     }
 
     @Override
     public Multi<Hero> findAllByIds(Multi<IdRequest> request) {
-        return heroClient.findAllByIds(request);
+        return heroClient.withCallCredentials(TokenCredentials.create())
+                .findAllByIds(request);
     }
 
 }

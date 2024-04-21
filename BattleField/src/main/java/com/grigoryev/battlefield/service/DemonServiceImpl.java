@@ -1,6 +1,7 @@
 package com.grigoryev.battlefield.service;
 
 import com.google.protobuf.Empty;
+import com.grigoryev.battlefield.interceptor.credentials.TokenCredentials;
 import com.grigoryev.demons.Demon;
 import com.grigoryev.demons.DemonService;
 import com.grigoryev.demons.MutinyDemonServiceGrpc;
@@ -18,17 +19,20 @@ public class DemonServiceImpl implements DemonService {
 
     @Override
     public Uni<Demon> findById(IdRequest request) {
-        return demonClient.findById(request);
+        return demonClient.withCallCredentials(TokenCredentials.create())
+                .findById(request);
     }
 
     @Override
     public Multi<Demon> findAll(Empty request) {
-        return demonClient.findAll(request);
+        return demonClient.withCallCredentials(TokenCredentials.create())
+                .findAll(request);
     }
 
     @Override
     public Multi<Demon> findAllByIds(Multi<IdRequest> request) {
-        return demonClient.findAllByIds(request);
+        return demonClient.withCallCredentials(TokenCredentials.create())
+                .findAllByIds(request);
     }
 
 }

@@ -37,7 +37,7 @@ public class AuthServerInterceptor implements ServerInterceptor {
                 return Contexts.interceptCall(context, serverCall, metadata, serverCallHandler);
             }
         }
-        log.info("Status: {}, {}", status.getCode(), status.getDescription());
+        log.warn("Authentication failed. Status: {}, {}", status.getCode(), status.getDescription());
         serverCall.close(status, new Metadata());
         return new ServerCall.Listener<>() {
         };
