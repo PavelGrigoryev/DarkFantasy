@@ -14,6 +14,11 @@ message HeroVsDemon {
   demons.Demon demon = 2;
 }
 
+message IdsRequest {
+  int64 heroId = 1;
+  int64 demonId = 2;
+}
+
 service HeroesVsDemonsService {
   rpc findHeroVsDemonById(IdsRequest) returns (HeroVsDemon) {};
   rpc findAllHeroVsDemonByIds(stream IdsRequest) returns(stream HeroVsDemon) {};
