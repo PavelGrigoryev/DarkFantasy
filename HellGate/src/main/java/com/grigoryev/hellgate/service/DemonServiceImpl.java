@@ -3,6 +3,7 @@ package com.grigoryev.hellgate.service;
 import com.google.protobuf.Empty;
 import com.grigoryev.demons.Demon;
 import com.grigoryev.demons.DemonServiceGrpc;
+import com.grigoryev.hellgate.interceptor.credentials.TokenCredentials;
 import com.grigoryev.hellgate.service.observer.DemonStreamObserver;
 import com.grigoryev.id.IdRequest;
 import io.grpc.stub.StreamObserver;
@@ -19,17 +20,20 @@ public class DemonServiceImpl extends DemonServiceGrpc.DemonServiceImplBase {
 
     @Override
     public void findById(IdRequest request, StreamObserver<Demon> responseObserver) {
-        demonClient.findById(request, new DemonStreamObserver(responseObserver));
+        demonClient.withCallCredentials(TokenCredentials.create())
+                .findById(request, new DemonStreamObserver(responseObserver));
     }
 
     @Override
     public void findAll(Empty request, StreamObserver<Demon> responseObserver) {
-        demonClient.findAll(request, new DemonStreamObserver(responseObserver));
+        demonClient.withCallCredentials(TokenCredentials.create())
+                .findAll(request, new DemonStreamObserver(responseObserver));
     }
 
     @Override
     public StreamObserver<IdRequest> findAllByIds(StreamObserver<Demon> responseObserver) {
-        return demonClient.findAllByIds(new DemonStreamObserver(responseObserver));
+        return demonClient.withCallCredentials(TokenCredentials.create())
+                .findAllByIds(new DemonStreamObserver(responseObserver));
     }
 
 }

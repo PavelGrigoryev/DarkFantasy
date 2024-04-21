@@ -1,5 +1,6 @@
 package com.grigoryev.demons;
 
+import com.grigoryev.demons.interceptor.AuthServerInterceptor;
 import com.grigoryev.demons.interceptor.LoggingServerInterceptor;
 import com.grigoryev.demons.service.DemonServiceImpl;
 import com.grigoryev.demons.util.YamlUtil;
@@ -19,6 +20,7 @@ public class DemonApplication {
 
         Server server = ServerBuilder.forPort(port)
                 .addService(new DemonServiceImpl())
+                .intercept(new AuthServerInterceptor())
                 .intercept(new LoggingServerInterceptor())
                 .build()
                 .start();

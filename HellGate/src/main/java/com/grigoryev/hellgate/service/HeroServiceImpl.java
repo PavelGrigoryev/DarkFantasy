@@ -1,6 +1,7 @@
 package com.grigoryev.hellgate.service;
 
 import com.google.protobuf.Empty;
+import com.grigoryev.hellgate.interceptor.credentials.TokenCredentials;
 import com.grigoryev.hellgate.service.observer.HeroStreamObserver;
 import com.grigoryev.heroes.DeleteResponse;
 import com.grigoryev.heroes.Hero;
@@ -21,49 +22,55 @@ public class HeroServiceImpl extends HeroServiceGrpc.HeroServiceImplBase {
 
     @Override
     public void findById(IdRequest request, StreamObserver<Hero> responseObserver) {
-        heroClient.findById(request, new HeroStreamObserver(responseObserver));
+        heroClient.withCallCredentials(TokenCredentials.create())
+                .findById(request, new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public void findAll(Empty request, StreamObserver<Hero> responseObserver) {
-        heroClient.findAll(request, new HeroStreamObserver(responseObserver));
+        heroClient.withCallCredentials(TokenCredentials.create())
+                .findAll(request, new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public StreamObserver<IdRequest> findAllByIds(StreamObserver<Hero> responseObserver) {
-        return heroClient.findAllByIds(new HeroStreamObserver(responseObserver));
+        return heroClient.withCallCredentials(TokenCredentials.create())
+                .findAllByIds(new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public void save(SaveHeroRequest request, StreamObserver<Hero> responseObserver) {
-        heroClient.save(request, new HeroStreamObserver(responseObserver));
+        heroClient.withCallCredentials(TokenCredentials.create())
+                .save(request, new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public void updateById(Hero request, StreamObserver<Hero> responseObserver) {
-        heroClient.updateById(request, new HeroStreamObserver(responseObserver));
+        heroClient.withCallCredentials(TokenCredentials.create())
+                .updateById(request, new HeroStreamObserver(responseObserver));
     }
 
     @Override
     public void deleteById(IdRequest request, StreamObserver<DeleteResponse> responseObserver) {
-        heroClient.deleteById(request, new StreamObserver<>() {
+        heroClient.withCallCredentials(TokenCredentials.create())
+                .deleteById(request, new StreamObserver<>() {
 
-            @Override
-            public void onNext(DeleteResponse response) {
-                responseObserver.onNext(response);
-            }
+                    @Override
+                    public void onNext(DeleteResponse response) {
+                        responseObserver.onNext(response);
+                    }
 
-            @Override
-            public void onError(Throwable throwable) {
-                responseObserver.onError(throwable);
-            }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        responseObserver.onError(throwable);
+                    }
 
-            @Override
-            public void onCompleted() {
-                responseObserver.onCompleted();
-            }
+                    @Override
+                    public void onCompleted() {
+                        responseObserver.onCompleted();
+                    }
 
-        });
+                });
     }
 
 }
